@@ -23,6 +23,15 @@ public struct AccessToken: Codable {
 	public let provider: String
 	public let token: String
 	public let expiration: Int?
+	public init(aliasId: String,
+				provider: String,
+				token: String,
+				expiration: Int?) {
+		self.aliasId = aliasId
+		self.provider = provider
+		self.token = token
+		self.expiration = expiration
+	}
 }
 
 public struct SAuthError: Error, Codable, CustomStringConvertible {
