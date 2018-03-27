@@ -155,18 +155,21 @@ public struct Alias: Codable {
 	public let flags: UInt
 	public let pwSalt: String?
 	public let pwHash: String?
+	public let defaultLocale: String?
 	public init(address: String,
 				account: UUID,
 				priority: Int,
 				flags: UInt,
 				pwSalt: String?,
-				pwHash: String?) {
+				pwHash: String?,
+				defaultLocale: String?) {
 		self.address = address
 		self.account = account
 		self.priority = priority
 		self.flags = flags
 		self.pwSalt = pwSalt
 		self.pwHash = pwHash
+		self.defaultLocale = defaultLocale
 	}
 }
 
@@ -175,13 +178,46 @@ public struct AliasBrief: Codable {
 	public let account: UUID
 	public let priority: Int
 	public let flags: UInt
+	public let defaultLocale: String?
 	public init(address: String,
 				account: UUID,
 				priority: Int,
-				flags: UInt) {
+				flags: UInt,
+				defaultLocale: String?) {
 		self.address = address
 		self.account = account
 		self.priority = priority
 		self.flags = flags
+		self.defaultLocale = defaultLocale
 	}
 }
+
+public struct Audit: Codable {
+	public let alias: String
+	public let action: String
+	public let account: UUID?
+	public let provider: String?
+	public let error: String?
+	public let attemptedAt: Int
+	public init(alias: String,
+				action: String,
+				account: UUID?,
+				provider: String?,
+				error: String?,
+				attemptedAt: Int) {
+		self.alias = alias
+		self.action = action
+		self.account = account
+		self.provider = provider
+		self.error = error
+		self.attemptedAt = attemptedAt
+	}
+}
+
+
+
+
+
+
+
+
