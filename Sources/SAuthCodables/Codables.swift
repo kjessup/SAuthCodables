@@ -122,7 +122,6 @@ public struct TokenClaim: Codable {
 		self.oauthProvider = oauthProvider
 		self.oauthAccessToken = oauthAccessToken
 	}
-	
 }
 
 public struct AccountPublicMeta: Codable {
