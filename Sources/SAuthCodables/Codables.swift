@@ -54,9 +54,11 @@ public enum AuthAPI {
 	public struct RegisterRequest: Codable {
 		public let email: String
 		public let password: String
-		public init(email e: String, password p: String) {
+		public let fullName: String?
+		public init(email e: String, password p: String, fullName f: String?) {
 			email = e
 			password = p
+			fullName = f
 		}
 	}
 	
