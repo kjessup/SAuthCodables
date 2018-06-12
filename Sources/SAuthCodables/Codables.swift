@@ -215,10 +215,37 @@ public struct Audit: Codable {
 	}
 }
 
+public struct MobileDeviceId: Codable {
+	public let deviceId: String
+	public let deviceType: String
+	public let aliasId: String
+	public let createdAt: Int
+	public init(deviceId: String, deviceType: String, aliasId: String, createdAt: Int) {
+		self.deviceId = deviceId
+		self.deviceType = deviceType
+		self.aliasId = aliasId
+		self.createdAt = createdAt
+	}
+}
 
+public struct PasswordResetToken: Codable {
+	public let aliasId: String
+	public let authId: String
+	public let expiration: Int
+	public init(aliasId: String, authId: String, expiration: Int) {
+		self.aliasId = aliasId
+		self.authId = authId
+		self.expiration = expiration
+	}
+}
 
-
-
-
-
-
+public struct AccountValidationToken: Codable {
+	public let aliasId: String
+	public let authId: String
+	public let createdAt: Int
+	public init(aliasId: String, authId: String, createdAt: Int) {
+		self.aliasId = aliasId
+		self.authId = authId
+		self.createdAt = createdAt
+	}
+}
