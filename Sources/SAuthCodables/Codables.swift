@@ -42,28 +42,34 @@ public struct SAuthError: Error, Codable, CustomStringConvertible {
 }
 
 public enum AuthAPI {
-	public struct TokenAcquiredResponse: Codable {
+	public struct TokenAcquiredResponse<C: Codable>: Codable {
 		public let token: String
-		public let account: Account?
-		public init(token: String, account: Account?) {
+		public let account: Account<C>?
+		public init(token: String, account: Account<C>?) {
 			self.token = token
 			self.account = account
 		}
 	}
 	
-	public struct RegisterRequest: Codable {
+	public struct RegisterRequest<C: Codable>: Codable {
 		public let email: String
 		public let password: String
-		public let fullName: String?
-		public init(email e: String, password p: String, fullName f: String?) {
+		public let meta: C?
+		public init(email e: String, password p: String, meta m: C?) {
 			email = e
 			password = p
-			fullName = f
+			meta = m
 		}
 	}
 	
-	public typealias LoginRequest = RegisterRequest
-	
+	public struct LoginRequest: Codable {
+		public let email: String
+		public let password: String
+		public init(email e: String, password p: String) {
+			email = e
+			password = p
+		}
+	}
 	public struct AddMobileDeviceRequest: Codable {
 		public let deviceId: String
 		public let deviceType: String
@@ -126,14 +132,8 @@ public struct TokenClaim: Codable {
 	}
 }
 
-public struct AccountPublicMeta: Codable {
-	public let fullName: String?
-	public init(fullName: String? = nil) {
-		self.fullName = fullName
-	}
-}
-
-public struct Account: Codable {
+public struct Account<AccountPublicMeta: Codable>: Codable {
+	
 	public let id: UUID
 	public let flags: UInt
 	public let createdAt: Int
