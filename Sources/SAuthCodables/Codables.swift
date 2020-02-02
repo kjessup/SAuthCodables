@@ -102,33 +102,60 @@ public enum AuthAPI {
 
 public typealias TokenAcquiredResponse = AuthAPI.TokenAcquiredResponse
 
-public struct TokenClaim: Codable {
-	enum CodingKeys: String, CodingKey {
-		case issuer = "iss", subject = "sub", expiration = "exp",
-		issuedAt = "iat", accountId = "accountId",
-		oauthProvider = "oauthProvider", oauthAccessToken = "oauthAccessToken"
+public struct TokenClaim {
+//	enum CodingKeys: String, CodingKey {
+//		case issuer = "iss", subject = "sub", expiration = "exp",
+//		issuedAt = "iat", accountId = "accountId",
+//		oauthProvider = "oauthProvider", oauthAccessToken = "oauthAccessToken"
+//	}
+	public var issuer: String? { payload["iss"] as? String }
+	public var subject: String? { payload["sub"] as? String }
+	public var expiration: Int? { payload["exp"] as? Int }
+	public var issuedAt: Int? { payload["iat"] as? Int }
+	public var accountId: UUID? { payload["accountId"] as? UUID }
+	public let payload: [String:Any]
+	public init(fields: [String:Any]) {
+		var fields = fields
+		let accountId: UUID?
+		if let acs = fields.removeValue(forKey: "accountId") as? String {
+			accountId = UUID(uuidString: acs)
+		} else {
+			accountId = nil
+		}
+		self.init(issuer: fields.removeValue(forKey: "iss") as? String,
+				  subject: fields.removeValue(forKey: "sub") as? String,
+				  expiration: fields.removeValue(forKey: "exp") as? Int,
+				  issuedAt: fields.removeValue(forKey: "iat") as? Int,
+				  accountId: accountId,
+				  extra: fields)
+		
 	}
-	public let issuer: String?
-	public let subject: String?
-	public let expiration: Int?
-	public let issuedAt: Int?
-	public let accountId: UUID?
-	public let oauthProvider: String?
-	public let oauthAccessToken: String?
 	public init(issuer: String? = nil,
 				subject: String? = nil,
 				expiration: Int? = nil,
 				issuedAt: Int? = nil,
 				accountId: UUID? = nil,
-				oauthProvider: String? = nil,
-				oauthAccessToken: String? = nil) {
-		self.issuer = issuer
-		self.subject = subject
-		self.expiration = expiration
-		self.issuedAt = issuedAt
-		self.accountId = accountId
-		self.oauthProvider = oauthProvider
-		self.oauthAccessToken = oauthAccessToken
+				extra: [String:Any]? = nil) {
+		var p = [String:Any]()
+		if let v = issuer {
+			p["iss"] = v
+		}
+		if let v = subject {
+			p["sub"] = v
+		}
+		if let v = expiration {
+			p["exp"] = v
+		}
+		if let v = issuedAt {
+			p["iat"] = v
+		}
+		if let v = accountId?.uuidString {
+			p["accountId"] = v
+		}
+		if let v = extra {
+			p.merge(v, uniquingKeysWith: {$1})
+		}
+		payload = p
 	}
 }
 
