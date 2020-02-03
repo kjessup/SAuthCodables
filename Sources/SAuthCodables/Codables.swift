@@ -54,10 +54,12 @@ public enum AuthAPI {
 	public struct RegisterRequest<C: Codable>: Codable {
 		public let email: String
 		public let password: String
+		public let profilePic: String?
 		public let meta: C?
-		public init(email e: String, password p: String, meta m: C?) {
+		public init(email e: String, password p: String, profilePic: String? = nil, meta m: C?) {
 			email = e
 			password = p
+			self.profilePic = profilePic
 			meta = m
 		}
 	}
@@ -160,18 +162,20 @@ public struct TokenClaim {
 }
 
 public struct Account<AccountPublicMeta: Codable>: Codable {
-	
 	public let id: UUID
 	public let flags: UInt
 	public let createdAt: Int
+	public let profilePic: String?
 	public let meta: AccountPublicMeta?
 	public init(id: UUID,
 				flags: UInt,
 				createdAt: Int,
+				profilePic: String? = nil,
 				meta: AccountPublicMeta? = nil) {
 		self.id = id
 		self.flags = flags
 		self.createdAt = createdAt
+		self.profilePic = profilePic
 		self.meta = meta
 	}
 }
