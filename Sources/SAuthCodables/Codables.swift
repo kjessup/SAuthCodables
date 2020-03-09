@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import PerfectNIO
 
 public struct EmptyReply: Codable {
 	public init() {}
@@ -279,4 +280,37 @@ public struct AccountValidationToken: Codable {
 		self.authId = authId
 		self.createdAt = createdAt
 	}
+}
+
+public struct DeleteAccountRequest: Codable {
+	public let accountId: UUID
+	public init(accountId: UUID) {
+		self.accountId = accountId
+	}
+}
+
+public struct UpdateProfilePicResponse: Codable {
+	public let profilePicURI: String?
+	public init(profilePicURI: String?) {
+		self.profilePicURI = profilePicURI
+	}
+}
+
+
+public struct AccountRegisterRequest: Codable {
+	public let email: String
+	public let password: String
+	public let isAdmin: Bool?
+	public var fullName: String? = nil
+	public var profilePic: FileUpload? = nil
+	init(email: String, password: String, isAdmin: Bool) {
+		self.email = email
+		self.password = password
+		self.isAdmin = isAdmin
+	}
+}
+
+public struct UpdateProfilePicRequest: Codable {
+	public let accountId: UUID
+	public let profilePic: FileUpload
 }
