@@ -303,7 +303,7 @@ public struct AccountRegisterRequest: Codable {
 	public let isAdmin: Bool?
 	public var fullName: String? = nil
 	public var profilePic: FileUpload? = nil
-	init(email: String, password: String, isAdmin: Bool) {
+	public init(email: String, password: String, isAdmin: Bool) {
 		self.email = email
 		self.password = password
 		self.isAdmin = isAdmin
