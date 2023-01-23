@@ -6,7 +6,14 @@
 //
 
 import Foundation
-import PerfectNIO
+import PerfectMIME
+
+public struct FileUpload: Codable {
+	public let contentType: MIMEType
+	public let fileName: String
+	public let fileSize: Int
+	public let tmpFileName: String
+}
 
 public struct EmptyReply: Codable {
 	public init() {}

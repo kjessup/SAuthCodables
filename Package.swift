@@ -12,9 +12,11 @@ let package = Package(
 		.library(name: "SAuthCodables", targets: ["SAuthCodables"])
 	],
 	dependencies: [
-		.package(url: "https://github.com/PerfectlySoft/Perfect-NIO.git", .branch("master")),
+		//.package(url: "https://github.com/PerfectlySoft/Perfect-NIO.git", .branch("master")),
+		
+		.package(url: "https://github.com/PerfectlySoft/Perfect-MIME.git", from: "1.0.0"),
 	],
 	targets: [
-		.target(name: "SAuthCodables", dependencies: ["PerfectNIO"])
+		.target(name: "SAuthCodables", dependencies: ["PerfectMIME",/*"PerfectNIO"*/])
 	]
 )
